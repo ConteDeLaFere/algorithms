@@ -1,18 +1,20 @@
-package part1;
+package part2;
 
-public class StringListImpl implements StringList {
+import java.util.Arrays;
+
+public class IntegerListImpl implements IntegerList {
     private static final int INITIAL_CAPACITY = 10;
     private static final int FACTOR = 2;
     private int capacity = INITIAL_CAPACITY;
     private int size = 0;
-    private String[] elements;
+    private Integer[] elements;
 
-    public StringListImpl() {
-        elements = new String[INITIAL_CAPACITY];
+    public IntegerListImpl() {
+        elements = new Integer[INITIAL_CAPACITY];
     }
 
     @Override
-    public String add(String item) {
+    public Integer add(Integer item) {
         if (size == capacity) {
             increaseCapacity();
         }
@@ -21,7 +23,7 @@ public class StringListImpl implements StringList {
     }
 
     @Override
-    public String add(int index, String item) {
+    public Integer add(int index, Integer item) {
         if (index < 0 || index > size) {
             throw new IndexOutOfBoundsException();
         }
@@ -36,7 +38,7 @@ public class StringListImpl implements StringList {
     }
 
     @Override
-    public String set(int index, String item) {
+    public Integer set(int index, Integer item) {
         if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException();
         }
@@ -44,17 +46,17 @@ public class StringListImpl implements StringList {
     }
 
     @Override
-    public String remove(String item) {
+    public Integer remove(Integer item) {
         int index = indexOf(item);
         return remove(index);
     }
 
     @Override
-    public String remove(int index) {
+    public Integer remove(int index) {
         if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException();
         }
-        String item = elements[index];
+        Integer item = elements[index];
         for (int i = index; i < size - 1; i++) {
             elements[i] = elements[i + 1];
         }
@@ -66,8 +68,8 @@ public class StringListImpl implements StringList {
     }
 
     @Override
-    public boolean contains(String item) {
-        for (String str : elements) {
+    public boolean contains(Integer item) {
+        for (Integer str : elements) {
             if (str.equals(item)) {
                 return true;
             }
@@ -76,7 +78,7 @@ public class StringListImpl implements StringList {
     }
 
     @Override
-    public int indexOf(String item) {
+    public int indexOf(Integer item) {
         for (int i = 0; i < size; i++) {
             if (elements[i].equals(item)) {
                 return i;
@@ -86,7 +88,7 @@ public class StringListImpl implements StringList {
     }
 
     @Override
-    public int lastIndexOf(String item) {
+    public int lastIndexOf(Integer item) {
         for (int i = size - 1; i >= 0; i--) {
             if (elements[i].equals(item)) {
                 return i;
@@ -96,7 +98,7 @@ public class StringListImpl implements StringList {
     }
 
     @Override
-    public String get(int index) {
+    public Integer get(int index) {
         if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException();
         }
@@ -104,7 +106,7 @@ public class StringListImpl implements StringList {
     }
 
     @Override
-    public boolean equals(StringList otherList) {
+    public boolean equals(IntegerList otherList) {
         if (otherList == null) {
             throw new NullPointerException();
         }
@@ -134,27 +136,36 @@ public class StringListImpl implements StringList {
 
     @Override
     public void clear() {
-        elements = new String[INITIAL_CAPACITY];
+        elements = new Integer[INITIAL_CAPACITY];
     }
 
     @Override
-    public String[] toArray() {
-        String[] array = new String[size];
+    public Integer[] toArray() {
+        Integer[] array = new Integer[size];
         System.arraycopy(elements, 0, array, 0, size);
         return array;
     }
 
     private void increaseCapacity() {
         capacity *= FACTOR;
-        String[] newElements = new String[capacity];
+        Integer[] newElements = new Integer[capacity];
         System.arraycopy(elements, 0, newElements, 0, size);
         elements = newElements;
     }
 
     private void reduceCapacity() {
         capacity /= FACTOR;
-        String[] newElements = new String[capacity];
+        Integer[] newElements = new Integer[capacity];
         System.arraycopy(elements, 0, newElements, 0, size);
         elements = newElements;
+    }
+
+    private void quicksort()
+    {
+        Arrays.sort(elements);
+    }
+
+    private Integer binarySearch(Integer item) {
+        return Arrays.binarySearch(elements, item);
     }
 }
